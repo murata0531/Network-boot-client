@@ -1,1 +1,18 @@
-## ブート環境を構築
+#  事前準備(QEMU、KVM、virtioインストール)
+
+$ sudo apt install qemu libvirt-daemon libvirt-clients bridge-utils virt-manager
+
+# 構築
+
+1. ブート用クライアントにmacアドレスを設定
+    $ mac_address="52:54:00:99:99:99"
+
+2. qemuを起動
+    $ qemu-system-x86_64 \
+        -nodefaults \    # デフォルトオプションを利用しない
+        -enable-kvm \    # KVMを利用する
+        -boot n \        # ネットワークブート
+        -nographic \	   # グラフィック出力を無効化
+        -serial stdio \  # シリアル出力をstdioに
+        -netdev tap,id=nic1,ifname=tap0,script=no,downscript=no \  # ネットワークデバイスを指定
+        -device virtio-net-pci,netdev=nic1,mac=${mac_address}	     # NICのドライバとMACアドレスを指定
