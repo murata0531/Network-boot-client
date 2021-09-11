@@ -16,3 +16,5 @@ $ sudo apt install qemu libvirt-daemon libvirt-clients bridge-utils virt-manager
         -serial stdio \  # シリアル出力をstdioに
         -netdev tap,id=nic1,ifname=tap0,script=no,downscript=no \  # ネットワークデバイスを指定
         -device virtio-net-pci,netdev=nic1,mac=${mac_address}	     # NICのドライバとMACアドレスを指定
+
+※kvmがうまく動作しない可能性があるので、エラーが出た際は "-enable-kvm" オプションは指定しない
